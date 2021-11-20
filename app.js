@@ -26,8 +26,7 @@ app.use(session({
     resave: false,
     secret: 'easy-docker-web',
     cookie: {
-        maxAge: 365 * 24 * 60 * 60 * 1000,
-        expires: false
+        maxAge: 365 * 24 * 60 * 60 * 1000
     }
 }));
 
