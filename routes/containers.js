@@ -81,6 +81,14 @@ const returnContainersRouter = (io) => {
             };
         }
 
+        // restart policy
+        options.HostConfig = {
+            'RestartPolicy': {
+                'Name': req.body.isAlways === 'on' ? 'on-failure' : '',
+                'MaximumRetryCount': 5,
+            }
+        };
+
         // default ssh
         options.HostConfig.PortBindings = {'22/tcp': [{HostPort: ''}]}
         options.ExposedPorts = {'22/tcp': {}};
