@@ -81,17 +81,34 @@ const returnContainersRouter = (io) => {
             };
         }
 
-        // port
-        if (req.body.containerPortSource !== '' &&
+        // default ssh
+        options.HostConfig.PortBindings = {'22/tcp': [{HostPort: ''}]}
+        options.ExposedPorts = {'22/tcp': {}};
+
+        let srcPortString = req.body.containerPortSource
+        if (srcPortString.indexOf("-") !== -1) {
+            let startEnd = srcPortString.split("-")
+            let start = startEnd[0]
+            let end = startEnd[1]
+            let portRange = Array(end - start + 1).fill().map((element, index) => index + parseInt(start))
+            portRange.forEach(function (port) {
+                options.HostConfig.PortBindings[port + '/tcp'] = [{HostPort: ""}]
+                options.ExposedPorts[port + '/tcp'] = {};
+            })
+        } else if (req.body.containerPortSource !== '' &&
             req.body.containerPortDistination !== '') {
-            const src = req.body.containerPortSource + '/tcp';
+            const src = req.body.containerPortSource;
             const dis = req.body.containerPortDistination;
-            options['ExposedPorts'] = JSON.parse('{"' + src + '": {}}');
-            const tmp = '{ "' + src + '": [{ "HostPort":"' + dis + '" }]}';
-            options.HostConfig.PortBindings = JSON.parse(tmp);
+
+            options.HostConfig.PortBindings[src + '/tcp'] = [{HostPort: dis}]
+            options.ExposedPorts[src + '/tcp'] = {};
         }
 
-        if (req.body.containerCmd != '') {
+        console.log(JSON.stringify(options, null, 4));
+        // options.HostConfig.PortBindings={ '22/tcp': [ { HostPort: '' } ],'22/udp': [ { HostPort: '' } ] }
+        // options.ExposedPorts = { '22/tcp': {} , '22/udp': {} };
+
+        if (req.body.containerCmd !== '') {
             options.Cmd = ['/bin/sh', '-c', req.body.containerCmd];
             // console.log(options)
             docker.createContainer(options, (err, container) => {
@@ -112,7 +129,7 @@ const returnContainersRouter = (io) => {
                 StdinOnce: false,
                 ...options,
             };
-            docker.createContainer(runOpt).then(function(container) {
+            docker.createContainer(runOpt).then(function (container) {
                 return container.start();
             }).then((container) => {
                 res.redirect('/containers');
