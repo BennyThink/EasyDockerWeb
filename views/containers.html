@@ -34,13 +34,9 @@
                     <%= container.Command %>
                 </td>
                 <td>
-                    <% if(container.Ports[0]){ %>
-                    [TCP]
-                    <%= container.Ports[0].PrivatePort %>
-                    <% if(container.Ports[0].PublicPort){ %>
-                    -> <%= container.Ports[0].PublicPort %>
-                    <% } %>
-                    <% } %>
+                    <% container.Ports.forEach(function(item) { %>
+                    <%-`${item["IP"]}:${item["PublicPort"]}->${item["PrivatePort"]}/${item["Type"]}<br>`;%>
+                    <%   });%>
                 </td>
                 <td>
                     <% if(container.State=='running'){ %>
