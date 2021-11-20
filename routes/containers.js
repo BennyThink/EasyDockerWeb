@@ -84,6 +84,8 @@ const returnContainersRouter = (io) => {
         // default ssh
         options.HostConfig.PortBindings = {'22/tcp': [{HostPort: ''}]}
         options.ExposedPorts = {'22/tcp': {}};
+        options.HostConfig.PortBindings['22/udp'] = [{HostPort: ""}]
+        options.ExposedPorts['22/udp'] = {};
 
         let srcPortString = req.body.containerPortSource
         if (srcPortString.indexOf("-") !== -1) {
@@ -94,6 +96,8 @@ const returnContainersRouter = (io) => {
             portRange.forEach(function (port) {
                 options.HostConfig.PortBindings[port + '/tcp'] = [{HostPort: ""}]
                 options.ExposedPorts[port + '/tcp'] = {};
+                options.HostConfig.PortBindings[port + '/udp'] = [{HostPort: ""}]
+                options.ExposedPorts[port + '/udp'] = {};
             })
         } else if (req.body.containerPortSource !== '' &&
             req.body.containerPortDistination !== '') {
@@ -102,6 +106,8 @@ const returnContainersRouter = (io) => {
 
             options.HostConfig.PortBindings[src + '/tcp'] = [{HostPort: dis}]
             options.ExposedPorts[src + '/tcp'] = {};
+            options.HostConfig.PortBindings[src + '/udp'] = [{HostPort: dis}]
+            options.ExposedPorts[src + '/udp'] = {};
         }
 
         console.log(JSON.stringify(options, null, 4));
