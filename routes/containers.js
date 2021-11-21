@@ -169,6 +169,14 @@ const returnContainersRouter = (io) => {
     router.get('/logs/:id', (req, res, next) => {
         res.render('logs');
     });
+    router.get('/inspect/:id', (req, res, next) => {
+        const container = docker.getContainer(req.params.id);
+
+        container.inspect(function (err, data) {
+            res.json(data);
+            // res.json({"data":"v"});
+        });
+    });
 
     io.on('connection', (socket) => {
         socket.on('exec', (id, w, h) => {

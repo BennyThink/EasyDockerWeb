@@ -1,17 +1,19 @@
 <div class="container">
-  <hr>
-  <footer id="footer">
-      <div class="container">
-        <div class="copyright">
-          &copy; Copyright <strong>qfdk</strong>. All Rights Reserved
+    <hr>
+    <footer id="footer">
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong>qfdk</strong>. All Rights Reserved
+            </div>
         </div>
-      </div>
     </footer>
 </div>
 <!-- jQuery -->
 <script src="/static/js/jquery.min.js"></script>
 <!-- Bootstrap JavaScript -->
-<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
+        integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
+        crossorigin="anonymous"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/bootstrap-select.min.js"></script>
 <script src="/static/js/bootstrap3-typeahead.min.js"></script>
@@ -24,6 +26,19 @@
     $(function () {
         $("[data-toggle='popover']").popover();
     });
+
+    function inspectContainer(containerid) {
+        $.ajax({
+            url: `/containers/inspect/${containerid}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (res) {
+                $('#inspectModal').modal('show');
+                $("#inspectModalLabel").text(`${res.Name.replace("/", "")} details`)
+                $("#inspectResult").text(JSON.stringify(res, null, 4))
+            }
+        });
+    }
 </script>
 </body>
 </html>

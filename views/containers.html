@@ -36,7 +36,7 @@
                 <td>
                     <% container.Ports.forEach(function(item) { %>
                     <%-`${item["IP"]}:${item["PublicPort"]}->${item["PrivatePort"]}/${item["Type"]}<br>`;%>
-                    <%   });%>
+                    <% });%>
                 </td>
                 <td>
 
@@ -103,6 +103,13 @@
                        href="/containers/logs/<%= container.Id %>">
                         <span class="glyphicon glyphicon-comment"></span> Logs
                     </a>
+
+                    <button id="inspect-button"
+                            type="button" class="btn btn-info btn-xs" onclick="inspectContainer('<%=container.Id%>')">
+                        <span class="glyphicon glyphicon-exclamation-sign"></span> Inspect
+                    </button>
+
+
                 </td>
             </tr>
             <% }) %>
@@ -156,7 +163,8 @@
                         <label for="containerVolumeSource">Volume: </label>
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="text" placeholder="Container" class="form-control" name="containerVolumeSource"
+                                <input type="text" placeholder="Container" class="form-control"
+                                       name="containerVolumeSource"
                                        id="containerVolumeSource">
                             </div>
                             <div class="col-md-6">
@@ -170,7 +178,8 @@
                         <label for="containerPortSource">Expose port (both TCP and UDP): </label>
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="text" placeholder="Container" class="form-control" name="containerPortSource"
+                                <input type="text" placeholder="Container" class="form-control"
+                                       name="containerPortSource"
                                        id="containerPortSource">
                             </div>
                             <div class="col-md-6">
@@ -188,7 +197,8 @@
                         <input type="text" class="form-control" name="containerMem" id="containerMem">
                     </div>
                     <div class="form-group">
-                        <label for="containerCmd">CPU limit(1 refers to one core while 0.5 refers to half a core): </label>
+                        <label for="containerCmd">CPU limit(1 refers to one core while 0.5 refers to half a
+                            core): </label>
                         <input type="text" class="form-control" name="containerCPU" id="containerCPU">
                     </div>
                 </div>
@@ -203,4 +213,29 @@
         </div>
     </div>
 </div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="inspectModal" tabindex="-1" role="dialog" aria-labelledby="inspectModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="inspectModalLabel">
+                    容器状态
+                </h4>
+            </div>
+            <div class="modal-body">
+                <pre class="pre-scrollable" id="inspectResult">abcd</pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 <% include include/footer.html %>
