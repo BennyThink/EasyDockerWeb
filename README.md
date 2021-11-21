@@ -58,21 +58,21 @@ docker run -p 3000:3000 -v /var/run/docker.sock:/var/run/docker.sock easy-docker
 - 计划使用react重构 https://github.com/qfdk/EasyDockerWeb/tree/react
 
 ## Images
-![login](./images/login.png)
+![login](assets/login.png)
 
-![overview](./images/overview.png)
+![overview](assets/overview.png)
 
-![terminal](./images/terminal.png)
+![terminal](assets/terminal.png)
 
-![newContainer](./images/newContainer.png)
+![newContainer](assets/newContainer.png)
 
-![containers](./images/containers.png)
+![containers](assets/containers.png)
 
-![images](./images/images.png)
+![images](assets/images.png)
 
-![pull](./images/pull.png)
+![pull](assets/pull.png)
 
-![pull2](./images/pull2.png)
+![pull2](assets/pull2.png)
 
 ## Sponsor
 <a href="https://www.jetbrains.com/?from=EasyDockerWeb"><img src="images/jetbrains-variant-4.svg" alt="JetBrains" width="200"/></a>
