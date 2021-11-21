@@ -117,7 +117,17 @@ const returnContainersRouter = (io) => {
             options.HostConfig.PortBindings[src + '/udp'] = [{HostPort: dis}]
             options.ExposedPorts[src + '/udp'] = {};
         }
-
+        // setting ram limit
+        //  So if --memory="300m" and --memory-swap="1g", the container can use 300m of memory and 700m (1g - 300m) swap.
+        if (req.body.containerMem!== '') {
+            options.HostConfig.Memory = req.body.containerMem * 1024 * 1024;
+        }
+        // limit cpu
+        if (req.body.containerCPU !== '') {
+            // 1 core=1000000000 10**9
+            options.HostConfig.NanoCpus = parseFloat(req.body.containerCPU) * 10 ** 9;
+        }
+        console.log(req.body);
         console.log(JSON.stringify(options, null, 4));
         // options.HostConfig.PortBindings={ '22/tcp': [ { HostPort: '' } ],'22/udp': [ { HostPort: '' } ] }
         // options.ExposedPorts = { '22/tcp': {} , '22/udp': {} };

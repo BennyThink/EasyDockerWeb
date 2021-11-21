@@ -172,6 +172,14 @@
                         <label for="containerCmd">Cmd: </label>
                         <input type="text" class="form-control" name="containerCmd" id="containerCmd">
                     </div>
+                    <div class="form-group">
+                        <label for="containerCmd">memory(include swap and RAM, in megabytes): </label>
+                        <input type="text" class="form-control" name="containerMem" id="containerMem">
+                    </div>
+                    <div class="form-group">
+                        <label for="containerCmd">CPU limit(1 refers to one core while 0.5 refers to half a core): </label>
+                        <input type="text" class="form-control" name="containerCPU" id="containerCPU">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
