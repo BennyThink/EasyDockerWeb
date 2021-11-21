@@ -1,6 +1,8 @@
+ARG version=latest
+
 FROM ghcr.io/bennythink/base as mybase
 
-FROM ubuntu:20.04
+FROM ubuntu:${version}
 RUN apt update && apt install -y openssh-server  && mkdir /run/sshd
 RUN echo 'root:root' |chpasswd && echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 
