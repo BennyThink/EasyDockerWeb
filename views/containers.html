@@ -139,8 +139,11 @@
                             <option class="bs-title-option" value="">Please select an image ...</option>
                             <% if(images){ %>
                             <% images.forEach(function(image,index){ %>
+                            <% if (index===0) {%>
+                            <option selected="true"><%= image.RepoTags %></option>
+                            <%} else {%>
                             <option><%= image.RepoTags %></option>
-                            <% }) %>
+                            <% }}) %>
                             <% } %>
                         </select>
                     </div>
