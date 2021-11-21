@@ -39,14 +39,25 @@
                     <%   });%>
                 </td>
                 <td>
+
+
                     <% if(container.State=='running'){ %>
-                    <span class="label label-success btn-xs"><%= container.State %></span>
+                    <span class="label label-success btn-xs" title="container status"
+                          data-container="body" data-toggle="popover" data-placement="top"
+                          data-trigger="hover"
+                          data-content="<%=container.Status%>"><%= container.State %></span>
                     <% } %>
                     <% if(container.State=='exited'){ %>
-                    <span class="label label-danger btn-xs"><%= container.State %></span>
+                    <span class="label label-danger btn-xs" title="container status"
+                          data-container="body" data-toggle="popover" data-placement="top"
+                          data-trigger="hover"
+                          data-content="<%=container.Status%>"><%= container.State %></span>
                     <% } %>
                     <% if(container.State=='created'){ %>
-                    <span class="label label-warning btn-xs"><%= container.State %></span>
+                    <span class="label label-warning btn-xs" title="container status"
+                          data-container="body" data-toggle="popover" data-placement="top"
+                          data-trigger="hover"
+                          data-content="<%=container.Status%>"><%= container.State %></span>
                     <% } %>
                 </td>
                 <td class="container-cpu" container-id="<%= container.Id %>">No data</td>
