@@ -25,11 +25,3 @@ def all():
 def start():
     base()
     all()
-
-
-def run(image=f"{registry}/ubuntu:20.04", port=2222, rm=True):
-    if rm:
-        cmd = f"docker run --rm -p {port}:22 {image}"
-    else:
-        cmd = f"docker run  -p {port}:22 {image}"
-    local(cmd)
