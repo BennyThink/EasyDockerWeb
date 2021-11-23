@@ -1,8 +1,8 @@
-ARG version=latest
+ARG image_tag
 
-FROM ghcr.io/bennythink/base as mybase
+FROM ghcr.io/bennythink/alpine:base as mybase
 
-FROM alpine:${version}
+FROM ${image_tag}
 RUN apk update && apk add dropbear
 RUN mkdir /etc/dropbear && echo 'root:root' |chpasswd
 

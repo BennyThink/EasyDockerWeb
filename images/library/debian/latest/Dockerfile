@@ -1,8 +1,8 @@
-ARG version=latest
+ARG image_tag
 
-FROM ghcr.io/bennythink/base as mybase
+FROM ghcr.io/bennythink/alpine:base as mybase
 
-FROM debian:${version}
+FROM ${image_tag}
 RUN apt update && apt install -y --no-install-recommends openssh-server   && mkdir /run/sshd
 RUN echo 'root:root' |chpasswd && echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 

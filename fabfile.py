@@ -8,20 +8,17 @@ registry = "ghcr.io/bennythink"
 
 # fabric3
 def base():
-    local(f"docker build -f images/base/Dockerfile -t {registry}/base .")
-    local(f"docker push {registry}/base ")
+    local(f"docker build -f images/library/alpine/base/Dockerfile -t {registry}/alpine:base .")
+    local(f"docker push {registry}/alpine:base ")
 
 
-def all():
-    for filename in glob.iglob("images/**/Dockerfile", recursive=True):
-        dirs: "list" = filename.split(os.sep)
-        if "base" not in dirs:
-            version = dirs[-2]
-            distro = dirs[-3]
-            local(f"docker build -f {filename} --build-arg version={version} -t {registry}/{distro}:{version} .")
-            local(f"docker push {registry}/{distro}:{version}")
-
-
-def start():
+def build():
     base()
-    all()
+    for fn in glob.iglob("images/**/Dockerfile", recursive=True):
+        dirs: "list" = fn.split(os.sep)
+        username = dirs[1]
+        distro = dirs[2]
+        tag = dirs[3]
+        image_tag = f"{username}/{distro}:{tag}"
+        local(f"docker build -f {fn} --build-arg image_tag={image_tag} -t {registry}/{distro}:{tag} .")
+        local(f"docker push {registry}/{distro}:{tag}")

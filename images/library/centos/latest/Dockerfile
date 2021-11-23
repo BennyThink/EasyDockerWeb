@@ -1,9 +1,9 @@
-ARG version=latest
+ARG image_tag
 
-FROM ghcr.io/bennythink/base as mybase
+FROM ghcr.io/bennythink/alpine:base as mybase
 
-FROM kalilinux/kali:${version}
-RUN apt update && apt install -y --no-install-recommends openssh-server  && mkdir /run/sshd
+FROM ${image_tag}
+RUN yum install -y openssh-server  && /usr/bin/ssh-keygen -A
 RUN echo 'root:root' |chpasswd && echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 
 COPY --from=mybase /etc/supervisor.conf /etc
