@@ -8,5 +8,6 @@ RUN echo 'root:root' |chpasswd && echo "PermitRootLogin yes" >> /etc/ssh/sshd_co
 
 COPY --from=mybase /etc/supervisor.conf /etc
 COPY --from=mybase /usr/local/bin/supervisord /usr/local/bin/supervisord
+COPY random /tmp/random
 
 ENTRYPOINT  ["supervisord", "-c" ,"/etc/supervisor.conf"]

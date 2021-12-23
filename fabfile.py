@@ -20,8 +20,11 @@ def build():
         distro = dirs[2]
         tag = dirs[3]
         image_tag = f"{username}/{distro}:{tag}"
+        with open("random", "w") as f:
+            f.write(image_tag)
         local(f"docker build -f {fn} --build-arg image_tag={image_tag} -t {registry}/{distro}:{tag} .")
         local(f"docker push {registry}/{distro}:{tag}")
+    os.remove("random")
 
 
 def prepare():
